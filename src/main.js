@@ -12,6 +12,7 @@ const Icons = {
   mail: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`,
   star: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`,
   gitBranch: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>`,
+  download: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`,
   external: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`
 }
 
@@ -29,11 +30,16 @@ const htmlContent = `
       <a href="#about" class="nav-link">About</a>
       <a href="#projects" class="nav-link">Work</a>
       <a href="#contact" class="nav-link">Contact</a>
+      <a href="/Resume.pdf" target="_blank" class="nav-link">Resume</a>
     </nav>
     <a href="https://github.com/manas0x" target="_blank" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
       ${Icons.github} <span style="margin-left: 8px">GitHub</span>
     </a>
   </header>
+
+  <a href="/Resume.pdf" download="Resume.pdf" class="resume-button-fixed">
+    ${Icons.download} <span>Resume</span>
+  </a>
 
   <main>
     <section class="hero-section">
@@ -101,7 +107,7 @@ const htmlContent = `
         <h2>Let's Build Something Amazing</h2>
         <div class="footer-cta">
           <p>Have a project in mind or just want to say hi?</p>
-          <a href="mailto:aroramanas01@gmail.com" class="btn btn-primary" style="font-size: 1.2rem; padding: 1rem 3rem;">
+          <a href="mailto:aroramanas01@gmail.com" class="btn btn-primary footer-email-btn">
             Say Hello
           </a>
         </div>

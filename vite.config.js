@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
+import * as vite from 'vite'
 
-export default defineConfig(({ command }) => ({
+export default vite.defineConfig(({ command }) => ({
     // Use relative base only for production build to support GitHub Pages
     // In dev mode, use default '/' to avoid path resolution issues
     base: command === 'build' ? './' : '/',

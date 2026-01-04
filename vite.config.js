@@ -1,14 +1,12 @@
 import { defineConfig } from 'vite'
 
-export default defineConfig({
-    // Base path for GitHub Pages
-    // If you are deploying to https://<USERNAME>.github.io/<REPO>/, set base to '/<REPO>/'
-    // If you are deploying to https://<USERNAME>.github.io/, set base to '/'
-    // Using './' ensures assets are relative, which often works for both but can have caveats with history mode routing (not used here).
-    base: './',
+export default defineConfig(({ command }) => ({
+    // Use relative base only for production build to support GitHub Pages
+    // In dev mode, use default '/' to avoid path resolution issues
+    base: command === 'build' ? './' : '/',
     build: {
         outDir: 'dist',
         assetsDir: 'assets',
         sourcemap: false
     }
-})
+}))

@@ -25,17 +25,25 @@ const htmlContent = `
   </div>
 
   <header>
-    <a href="#" class="logo">manas0x</a>
     <nav class="nav-links">
       <a href="#about" class="nav-link">About</a>
       <a href="#projects" class="nav-link">Work</a>
       <a href="#contact" class="nav-link">Contact</a>
       <a href="/Resume.pdf" target="_blank" class="nav-link">Resume</a>
     </nav>
-    <a href="https://github.com/manas0x" target="_blank" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
-      ${Icons.github} <span style="margin-left: 8px">GitHub</span>
-    </a>
   </header>
+
+  <div class="social-sidebar">
+    <a href="https://github.com/manas0x" target="_blank" class="sidebar-icon" aria-label="GitHub">
+      ${Icons.github}
+    </a>
+    <a href="https://linkedin.com/in/aroramanas01" target="_blank" class="sidebar-icon" aria-label="LinkedIn">
+      ${Icons.linkedin}
+    </a>
+    <a href="mailto:aroramanas01@gmail.com" class="sidebar-icon" aria-label="Email">
+      ${Icons.mail}
+    </a>
+  </div>
 
   <a href="/Resume.pdf" download="Resume.pdf" class="resume-button-fixed">
     ${Icons.download} <span>Resume</span>
@@ -44,13 +52,13 @@ const htmlContent = `
   <main>
     <section class="hero-section">
       <div class="hero-content">
-        <span class="hero-eyebrow">Portfolio 2026</span>
+        <span class="hero-eyebrow">Hello, I'm Manas Arora</span>
         <h1 class="hero-title">
           Building the <span class="text-gradient">Unknown</span>,<br>
           One Line at a Time.
         </h1>
         <p class="hero-subtitle">
-          I'm Manas Arora, a B.Tech student at DIT University. 
+          A B.Tech student at DIT University. 
           I engineer full-stack solutions and explore the depths of creative coding.
         </p>
         <div class="cta-group">
@@ -112,17 +120,7 @@ const htmlContent = `
           </a>
         </div>
         
-        <div class="footer-socials">
-          <a href="https://linkedin.com/in/aroramanas01" target="_blank" class="social-icon-link" aria-label="LinkedIn">
-            ${Icons.linkedin}
-          </a>
-          <a href="https://github.com/manas0x" target="_blank" class="social-icon-link" aria-label="GitHub">
-            ${Icons.github}
-          </a>
-          <a href="https://manas0x.site" target="_blank" class="social-icon-link" aria-label="Website">
-            ${Icons.globe}
-          </a>
-        </div>
+
       </div>
       
       <div class="footer-bottom">
@@ -137,7 +135,7 @@ document.querySelector('#app').innerHTML = htmlContent
 
 // --- Logic & Animations ---
 
-// 1. Cursor Follower
+// 1. Cursor Follower (Refined to be hidden when mouse leaves window)
 const cursor = document.getElementById('cursor')
 let mouseX = -100, mouseY = -100
 let cursorX = -100, cursorY = -100
@@ -145,13 +143,19 @@ let cursorX = -100, cursorY = -100
 document.addEventListener('mousemove', (e) => {
   mouseX = e.clientX
   mouseY = e.clientY
+  cursor.style.opacity = 1
 
   const target = e.target
-  if (target.closest('a') || target.closest('button') || target.closest('.project-card')) {
+  // Added sidebar-icon to hover targets
+  if (target.closest('a') || target.closest('button') || target.closest('.project-card') || target.closest('.sidebar-icon')) {
     cursor.classList.add('hovered')
   } else {
     cursor.classList.remove('hovered')
   }
+})
+
+document.addEventListener('mouseleave', () => {
+  cursor.style.opacity = 0
 })
 
 gsap.ticker.add(() => {
@@ -161,7 +165,9 @@ gsap.ticker.add(() => {
   cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`
 })
 
-// 2. Header Scroll Effect
+// 2. Header Scroll Effect (Capsule width adjustment?)
+// We can keep the simple scroll class toggle for background blur
+
 const header = document.querySelector('header')
 window.addEventListener('scroll', () => {
   if (window.scrollY > 50) {
@@ -173,14 +179,21 @@ window.addEventListener('scroll', () => {
 
 // 3. Hero Animations
 const tl = gsap.timeline()
-tl.from('.hero-content > *', {
-  y: 50,
+tl.from('.social-sidebar > *', {
+  x: -50,
   opacity: 0,
-  duration: 1.2,
+  duration: 1,
   stagger: 0.1,
-  ease: 'power4.out',
-  delay: 0.2
+  ease: 'power3.out'
 })
+
+  .from('.hero-content > *', {
+    y: 50,
+    opacity: 0,
+    duration: 1.2,
+    stagger: 0.1,
+    ease: 'power4.out',
+  }, "-=0.6")
 
 // 4. Projects Fetch
 const PROJECTS_CONTAINER = document.getElementById('projects-grid')
@@ -216,25 +229,26 @@ function renderProjects(repos) {
   PROJECTS_CONTAINER.innerHTML = ''
 
   repos.forEach((repo, i) => {
-    // Skip forks if desired, but user said "list my all project"
-    // Let's filter out very minor ones if needed logic, but here we just show top 9
-
-    const card = document.createElement('a')
-    card.href = repo.html_url
-    card.target = "_blank"
+    // Convert to div wrapper instead of anchor to allow multiple links
+    const card = document.createElement('div')
     card.className = 'project-card'
 
     // Basic formatting
     const desc = repo.description || 'No description provided.'
     const lang = repo.language || 'Code'
+    const indexStr = (i + 1).toString().padStart(2, '0')
+    const hasHomepage = repo.homepage && repo.homepage.length > 0
 
     card.innerHTML = `
-      <div class="card-image-placeholder" style="background: linear-gradient(${135 + i * 15}deg, var(--surface), var(--bg))">
-         <!-- Abstract generative art or pattern could go here -->
-         <div style="position: absolute; bottom: 1rem; left: 1rem; font-weight: 700; font-size: 3rem; opacity: 0.1; line-height: 1;">${(i + 1).toString().padStart(2, '0')}</div>
-      </div>
+      <a href="${repo.html_url}" target="_blank" class="card-image-link" aria-label="View ${repo.name} on GitHub">
+        <div class="card-image-placeholder" style="background: linear-gradient(${135 + i * 15}deg, var(--surface), var(--bg))">
+           <div class="card-index">${indexStr}</div>
+        </div>
+      </a>
       <div class="card-content">
-        <h3 class="project-title">${repo.name}</h3>
+        <a href="${repo.html_url}" target="_blank" class="project-title-link">
+          <h3 class="project-title">${repo.name}</h3>
+        </a>
         <p class="project-desc">${desc.length > 80 ? desc.substring(0, 80) + '...' : desc}</p>
         
         <div class="tech-stack">
@@ -243,14 +257,22 @@ function renderProjects(repos) {
         </div>
 
         <div class="card-links">
-          <div class="card-link">
+          <div class="card-stat">
              ${Icons.star} <span>${repo.stargazers_count}</span>
           </div>
-          <div class="card-link">
+          <div class="card-stat">
              ${Icons.gitBranch} <span>${repo.forks_count}</span>
           </div>
-          <div class="card-link" style="margin-left: auto;">
-             View Project ${Icons.external}
+          
+          <div class="card-actions" style="margin-left: auto; display: flex; gap: 1rem;">
+            <a href="${repo.html_url}" target="_blank" class="card-link action-link">
+               Code ${Icons.github}
+            </a>
+            ${hasHomepage ? `
+              <a href="${repo.homepage}" target="_blank" class="card-link action-link live-link">
+                 Live ${Icons.external}
+              </a>
+            ` : ''}
           </div>
         </div>
       </div>

@@ -148,47 +148,53 @@ ul {
   opacity: 0.4;
 }
 
-/* Header / Nav */
+/* Floating Glass Navbar */
 header {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 1.5rem 5%;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  min-width: 400px;
+  padding: 0.8rem 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   z-index: 100;
-  transition: transform 0.3s ease, background 0.3s ease;
+  background: rgba(15, 11, 30, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 }
 
 header.scrolled {
-  background: rgba(3, 0, 20, 0.8);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--card-border);
+  top: 1rem;
+  padding: 0.6rem 2rem;
+  background: rgba(15, 11, 30, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #fff, var(--primary));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  position: relative;
+  display: none;
+  /* Hiding text logo in nav for cleaner look, strictly nav links */
 }
 
 .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: 2.5rem;
+  margin: 0;
 }
 
 .nav-link {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--text-muted);
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   position: relative;
+  transition: color 0.3s;
 }
 
 .nav-link:hover {
@@ -197,18 +203,51 @@ header.scrolled {
 
 .nav-link::after {
   content: '';
+  /* Dot instead of underline */
   position: absolute;
   bottom: -4px;
   left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
+  transform: translateX(-50%) scale(0);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
   background: var(--primary);
-  transition: width 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .nav-link:hover::after {
-  width: 100%;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Fixed Left Social Sidebar */
+.social-sidebar {
+  position: fixed;
+  left: 2rem;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  z-index: 90;
+}
+
+.social-sidebar::after {
+  content: '';
+  width: 1px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.2);
+  margin-top: 1rem;
+}
+
+.sidebar-icon {
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+.sidebar-icon:hover {
+  color: var(--primary);
+  transform: translateY(-3px);
+  filter: drop-shadow(0 0 8px var(--primary));
 }
 
 /* Hero Section */
@@ -217,7 +256,8 @@ header.scrolled {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 5%;
+  padding: 0 5% 0 calc(5% + 60px);
+  /* Added left padding for sidebar */
   position: relative;
   overflow: hidden;
 }
@@ -225,6 +265,7 @@ header.scrolled {
 .hero-content {
   max-width: 900px;
   z-index: 2;
+  position: relative;
 }
 
 .hero-eyebrow {
@@ -303,7 +344,8 @@ header.scrolled {
 
 /* About Section */
 .section {
-  padding: 8rem 5%;
+  padding: 8rem 5% 8rem calc(5% + 60px);
+  /* Added left padding for sidebar */
   position: relative;
 }
 
@@ -366,12 +408,14 @@ header.scrolled {
   gap: 2rem;
 }
 
+/* Project Cards Redesign */
 .project-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
+  background: rgba(15, 11, 30, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
   overflow: hidden;
-  transition: all 0.4s ease;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -379,30 +423,44 @@ header.scrolled {
 }
 
 .project-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--primary);
-  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-10px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* Stagger Effect for Grid Items is handled in JS or we can use nth-child here for simplistic layout shifts */
+.projects-grid>a:nth-child(even) {
+  margin-top: 3rem;
+  /* Creates the staggered masonry look */
 }
 
 .card-image-placeholder {
   width: 100%;
-  height: 200px;
-  background: linear-gradient(45deg, #1a1a2e, #16213e);
+  height: 240px;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.card-image-placeholder::after {
-  content: '';
-  /* Generate abstract pattern css later or leave simple */
+/* Large Index Number */
+.card-index {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0.3;
-  background-image: radial-gradient(circle at 1px 1px, #fff 1px, transparent 0);
-  background-size: 20px 20px;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 5rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.05);
+  line-height: 1;
+  font-family: var(--font-heading);
+  transition: all 0.4s ease;
+}
+
+.project-card:hover .card-index {
+  color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
 }
 
 .card-content {
@@ -413,32 +471,37 @@ header.scrolled {
 }
 
 .project-title {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+  margin-bottom: 0.8rem;
   color: #fff;
+  font-weight: 700;
 }
 
 .project-desc {
   color: var(--text-muted);
-  font-size: 0.95rem;
-  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  margin-bottom: 2rem;
   flex-grow: 1;
+  line-height: 1.6;
 }
 
 .tech-stack {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
 }
 
 .tech-tag {
   font-size: 0.75rem;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .card-links {
@@ -463,7 +526,8 @@ header.scrolled {
 
 /* Contact / Footer */
 .footer-section {
-  padding: 8rem 5% 4rem;
+  padding: 8rem 5% 4rem calc(5% + 60px);
+  /* Added left padding for sidebar */
   background: radial-gradient(circle at center bottom, #1a103c 0%, #000 100%);
   text-align: center;
   position: relative;
@@ -626,6 +690,14 @@ header.scrolled {
     font-size: 3rem;
   }
 
+  /* Reset padding for mobile as sidebar is likely hidden or needs less space */
+  .hero-section,
+  .section,
+  .footer-section {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
   .about-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -635,9 +707,24 @@ header.scrolled {
     font-size: 2.5rem;
   }
 
-  .nav-links {
+  /* Hide sidebar on mobile for now to prevent overlap, enable later if desired */
+  .social-sidebar {
     display: none;
-    /* simple hide for mobile, or better menu later */
+  }
+
+  /* Adjust Navbar for mobile */
+  header {
+    min-width: 90%;
+    top: 1rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .nav-links {
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    font-size: 0.8rem;
   }
 
   .resume-button-fixed {

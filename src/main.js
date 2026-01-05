@@ -235,9 +235,15 @@ function renderProjects(repos) {
 
     // Basic formatting
     const desc = repo.description || 'No description provided.'
-    const lang = repo.language || 'Code'
     const indexStr = (i + 1).toString().padStart(2, '0')
-    const hasHomepage = repo.homepage && repo.homepage.length > 0
+
+    // Logic for Live URL: Use GitHub homepage, but override for invoiceflow as requested
+    let liveUrl = repo.homepage
+    if (repo.name.toLowerCase() === 'invoiceflow') {
+      liveUrl = 'https://invoiceflow.manas0x.site/'
+    }
+
+    const hasHomepage = liveUrl && liveUrl.length > 0
 
     card.innerHTML = `
       <a href="${repo.html_url}" target="_blank" class="card-image-link" aria-label="View ${repo.name} on GitHub">
@@ -269,7 +275,7 @@ function renderProjects(repos) {
                Code ${Icons.github}
             </a>
             ${hasHomepage ? `
-              <a href="${repo.homepage}" target="_blank" class="card-link action-link live-link">
+              <a href="${liveUrl}" target="_blank" class="card-link action-link live-link">
                  Live ${Icons.external}
               </a>
             ` : ''}

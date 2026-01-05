@@ -43,7 +43,10 @@ const htmlContent = `
     <a href="mailto:aroramanas01@gmail.com" class="sidebar-icon" aria-label="Email">
       ${Icons.mail}
     </a>
+    <div class="sidebar-line"></div>
   </div>
+
+
 
   <a href="/Resume.pdf" download="Resume.pdf" class="resume-button-fixed">
     ${Icons.download} <span>Resume</span>
@@ -235,6 +238,7 @@ function renderProjects(repos) {
 
     // Basic formatting
     const desc = repo.description || 'No description provided.'
+    const lang = repo.language || 'Code'
     const indexStr = (i + 1).toString().padStart(2, '0')
 
     // Logic for Live URL: Use GitHub homepage, but override for invoiceflow as requested

@@ -219,10 +219,12 @@ header.scrolled {
   transform: translateX(-50%) scale(1);
 }
 
+
+/* Fixed Left Social Sidebar */
 /* Fixed Left Social Sidebar */
 .social-sidebar {
   position: fixed;
-  left: 2rem;
+  left: 1.5rem;
   bottom: 0;
   display: flex;
   flex-direction: column;
@@ -231,17 +233,16 @@ header.scrolled {
   z-index: 90;
 }
 
-.social-sidebar::after {
-  content: '';
+.sidebar-line {
   width: 1px;
-  height: 80px;
-  background: rgba(255, 255, 255, 0.2);
-  margin-top: 1rem;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .sidebar-icon {
   color: var(--text-muted);
   transition: all 0.3s ease;
+  padding: 10px;
 }
 
 .sidebar-icon:hover {
@@ -250,14 +251,21 @@ header.scrolled {
   filter: drop-shadow(0 0 8px var(--primary));
 }
 
+@media (max-width: 768px) {
+  .social-sidebar {
+    display: none;
+  }
+}
+
+
+
 /* Hero Section */
 .hero-section {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 5% 0 calc(5% + 60px);
-  /* Added left padding for sidebar */
+  padding: 0 5% 0 8rem;
   position: relative;
   overflow: hidden;
 }
@@ -265,7 +273,6 @@ header.scrolled {
 .hero-content {
   max-width: 900px;
   z-index: 2;
-  position: relative;
 }
 
 .hero-eyebrow {
@@ -344,8 +351,7 @@ header.scrolled {
 
 /* About Section */
 .section {
-  padding: 8rem 5% 8rem calc(5% + 60px);
-  /* Added left padding for sidebar */
+  padding: 8rem 5%;
   position: relative;
 }
 
@@ -429,16 +435,9 @@ header.scrolled {
 }
 
 /* Stagger Effect for Grid Items is handled in JS or we can use nth-child here for simplistic layout shifts */
-/* Stagger Effect for Grid Items is handled in JS or we can use nth-child here for simplistic layout shifts */
-.projects-grid>.project-card:nth-child(even) {
+.projects-grid>a:nth-child(even) {
   margin-top: 3rem;
   /* Creates the staggered masonry look */
-}
-
-.card-image-link {
-  display: block;
-  text-decoration: none;
-  color: inherit;
 }
 
 .card-image-placeholder {
@@ -477,22 +476,11 @@ header.scrolled {
   flex-direction: column;
 }
 
-.project-title-link {
-  text-decoration: none;
-  color: inherit;
-  display: inline-block;
-}
-
 .project-title {
   font-size: 1.8rem;
   margin-bottom: 0.8rem;
   color: #fff;
   font-weight: 700;
-  transition: color 0.3s ease;
-}
-
-.project-title-link:hover .project-title {
-  color: var(--primary);
 }
 
 .project-desc {
@@ -526,53 +514,25 @@ header.scrolled {
   display: flex;
   gap: 1rem;
   margin-top: auto;
-  align-items: center;
 }
 
-.card-stat {
+.card-link {
   font-size: 0.9rem;
-  color: var(--text-muted);
+  color: #fff;
   display: flex;
   align-items: center;
   gap: 0.4rem;
   opacity: 0.8;
 }
 
-.action-link {
-  font-size: 0.9rem;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  opacity: 0.9;
-  text-decoration: none;
-  padding: 0.3rem 0.6rem;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
-}
-
-.action-link:hover {
+.card-link:hover {
   opacity: 1;
   color: var(--primary);
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-}
-
-.live-link {
-  color: var(--secondary);
-  /* Makes the live link visually distinct */
-}
-
-.live-link:hover {
-  color: #fff;
-  background: var(--secondary);
 }
 
 /* Contact / Footer */
 .footer-section {
-  padding: 8rem 5% 4rem calc(5% + 60px);
-  /* Added left padding for sidebar */
+  padding: 8rem 5% 4rem;
   background: radial-gradient(circle at center bottom, #1a103c 0%, #000 100%);
   text-align: center;
   position: relative;
@@ -735,14 +695,6 @@ header.scrolled {
     font-size: 3rem;
   }
 
-  /* Reset padding for mobile as sidebar is likely hidden or needs less space */
-  .hero-section,
-  .section,
-  .footer-section {
-    padding-left: 5%;
-    padding-right: 5%;
-  }
-
   .about-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -752,24 +704,9 @@ header.scrolled {
     font-size: 2.5rem;
   }
 
-  /* Hide sidebar on mobile for now to prevent overlap, enable later if desired */
-  .social-sidebar {
-    display: none;
-  }
-
-  /* Adjust Navbar for mobile */
-  header {
-    min-width: 90%;
-    top: 1rem;
-    padding: 0.6rem 1rem;
-  }
-
   .nav-links {
-    gap: 1.5rem;
-  }
-
-  .nav-link {
-    font-size: 0.8rem;
+    display: none;
+    /* simple hide for mobile, or better menu later */
   }
 
   .resume-button-fixed {

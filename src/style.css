@@ -429,9 +429,16 @@ header.scrolled {
 }
 
 /* Stagger Effect for Grid Items is handled in JS or we can use nth-child here for simplistic layout shifts */
-.projects-grid>a:nth-child(even) {
+/* Stagger Effect for Grid Items is handled in JS or we can use nth-child here for simplistic layout shifts */
+.projects-grid>.project-card:nth-child(even) {
   margin-top: 3rem;
   /* Creates the staggered masonry look */
+}
+
+.card-image-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
 .card-image-placeholder {
@@ -470,11 +477,22 @@ header.scrolled {
   flex-direction: column;
 }
 
+.project-title-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
+
 .project-title {
   font-size: 1.8rem;
   margin-bottom: 0.8rem;
   color: #fff;
   font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.project-title-link:hover .project-title {
+  color: var(--primary);
 }
 
 .project-desc {
@@ -508,20 +526,47 @@ header.scrolled {
   display: flex;
   gap: 1rem;
   margin-top: auto;
+  align-items: center;
 }
 
-.card-link {
+.card-stat {
   font-size: 0.9rem;
-  color: #fff;
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   gap: 0.4rem;
   opacity: 0.8;
 }
 
-.card-link:hover {
+.action-link {
+  font-size: 0.9rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  opacity: 0.9;
+  text-decoration: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.action-link:hover {
   opacity: 1;
   color: var(--primary);
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.live-link {
+  color: var(--secondary);
+  /* Makes the live link visually distinct */
+}
+
+.live-link:hover {
+  color: #fff;
+  background: var(--secondary);
 }
 
 /* Contact / Footer */

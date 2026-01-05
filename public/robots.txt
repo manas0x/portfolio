@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://manas0x.site/sitemap.xml
